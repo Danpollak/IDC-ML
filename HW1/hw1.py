@@ -15,11 +15,20 @@ def preprocess(X, y):
     - X: The mean normalized inputs.
     - y: The scaled labels.
     """
-    
-    ###########################################################################
-    # TODO: Implement the normalization function.                             #
-    ###########################################################################
-    pass
+
+
+    maxVal = np.amax(X)
+    minVal = np.amin(X)
+    avg = np.average(X)
+
+    def normvalues(i):
+        return (i-avg) / (maxVal-minVal)
+
+    vnorm=np.vectorize(normvalues)
+    normalizedColumn = vnorm(X)
+
+    "for j in np.nditer(scaledY): j = j / (maxVal-minVal)"
+
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
