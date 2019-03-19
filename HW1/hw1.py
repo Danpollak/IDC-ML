@@ -5,7 +5,7 @@ np.random.seed(42)
 def preprocess(X, y):
     """
     Perform mean normalization on the features and divide the true labels by
-    the range of the column. 
+    the range of the column.
 
     Input:
     - X: Inputs  (n features over m instances).
@@ -15,35 +15,17 @@ def preprocess(X, y):
     - X: The mean normalized inputs.
     - y: The scaled labels.
     """
-    newx = np.empty_like(X).astype(float);
-    newy = np.empty_like(y).astype(float);
-    for i in range(0,np.size(X,0)):
-        maxVal = np.amax(X[i])
-        minVal = np.amin(X[i])
-        avg = np.average(X[i])
-        def normvalues(i):
-            return (i - avg) / (maxVal - minVal)
 
-        vnorm = np.vectorize(normvalues)
-        newx[i:] = vnorm(X[i:])
-
-    maxVal = np.amax(y)
-    minVal = np.amin(y)
-    avg = np.average(y)
-
-    def normvalues(i):
-        return (i - avg) / (maxVal - minVal)
-
-    vnorm = np.vectorize(normvalues)
-    newy = vnorm(y)
-
-
-    X=newx
-    y=newy
-    ###########################################################################
-    #                             END OF YOUR CODE                            #
-    ###########################################################################
+    downX = np.max(X, axis=0) - np.min(X, axis=0)
+    muX = X.mean(axis=0)
+    meanvalueX = X - muX
+    X = meanvalueX / downX
+    downy = np.max(y) - np.min(y)
+    muy = y.mean()
+    meanvaluey = y - muy
+    y = meanvaluey / downy
     return X, y
+
 
 def compute_cost(X, y, theta):
     """
@@ -89,10 +71,7 @@ def gradient_descent(X, y, theta, alpha, num_iters):
     coeff = alpha/X.shape[0];
     for it in range(0, num_iters):
         diffX = np.matmul(X,theta) - y
-        sum = np.sum(diffX)
-        temp = [0,0]
-        temp[0] = theta[0] - coeff * np.sum(diffX)
-        temp[1] = theta[1] - coeff * np.matmul(diffX, X[:, 1])
+        temp = theta - coeff * np.matmul(diffX, X)
         theta = temp
         cost = compute_cost(X, y, theta)
         J_history.append(cost)
@@ -113,8 +92,10 @@ def pinv(X, y):
     ########## DO NOT USE numpy.pinv ##############
     """
     XT = np.transpose(X)
+    print(np.linalg.inv(np.matmul(XT, X)).shape)
     pinv = np.matmul(np.linalg.inv(np.matmul(XT, X)), XT)
     pinv_theta = np.matmul(pinv, y)
+    print(compute_cost(X, y, pinv_theta))
     return pinv_theta
 
 def efficient_gradient_descent(X, y, theta, alpha, num_iters):
@@ -135,21 +116,18 @@ def efficient_gradient_descent(X, y, theta, alpha, num_iters):
     - J_history: the loss value for every iteration.
     """
     J_history = []  # Use a python list to save cost in every iteration
-    J_history.append(compute_cost(X, y, theta))
     coeff = alpha/X.shape[0];
     for it in range(0, num_iters):
+        J_history.append(compute_cost(X, y, theta))
         diffX = np.matmul(X,theta) - y
         temp = [0,0]
         temp[0] = theta[0] - coeff * np.sum(diffX)
         temp[1] = theta[1] - coeff * np.matmul(diffX, X[:, 1])
         theta = temp
-        J_history.append(compute_cost(X, y, theta))
-        loss = J_history[it+1]
+        loss = compute_cost(X, y, theta)
         prev_loss = J_history[it]
-        loss_diff = prev_loss - loss
-        if loss_diff < 1e-8:
-            print(theta)
-            print(it)
+        loss_diff = loss - prev_loss
+        if abs(loss_diff) < 1e-8:
             break
     return theta, J_history
 
@@ -165,16 +143,20 @@ def find_best_alpha(X, y, iterations):
     - alpha_dict: A python dictionary that hold the loss value after training 
     for every value of alpha.
     """
-    
+    test_theta = np.random.random(2)
     alphas = [0.00001, 0.00003, 0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 2, 3]
     alpha_dict = {}
-    ###########################################################################
-    # TODO: Implement the function.                                           #
-    ###########################################################################
-    pass
-    ###########################################################################
-    #                             END OF YOUR CODE                            #
-    ###########################################################################
+    def test_alpha(alpha):
+        theta, J_history = efficient_gradient_descent(X, y, test_theta, alpha, iterations)
+        J_err = 0
+        while J_err < len(J_history)-100:
+            if J_history[J_err] > J_history[J_err+100]:
+                J_err += 100
+            else:
+                break
+        alpha_dict[alpha] = J_history[J_err]
+    for alpha in alphas:
+        test_alpha(alpha)
     return alpha_dict
 
 def generate_triplets(X):
