@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0373cb8c-216c-4d3c-a0c0-600af71b76e0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/hwa1-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/hwa1-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hw1.py" beforeDir="false" afterPath="$PROJECT_DIR$/hw1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hwa1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/hwa1.ipynb" afterDir="false" />
     </list>
@@ -16,54 +17,12 @@
     <SUITE FILE_PATH="coverage/hw1$hw1.coverage" NAME="hw1 Coverage Results" MODIFIED="1552994940069" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hw1.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="902">
-              <caret line="97" column="34" selection-start-line="97" selection-start-column="34" selection-end-line="97" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Downloads/hw1.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="62" selection-end-column="12" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Downloads/hwa1.ipynb">
-          <provider selected="true" editor-type-id="ipnb-editor">
-            <state>
-              <selected id="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/hwa1.ipynb">
-          <provider selected="true" editor-type-id="ipnb-editor">
-            <state>
-              <selected id="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>hypoteses_function</find>
+      <find>efficient_gradient_descent</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -73,7 +32,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$USER_HOME$/Downloads/hw1.py" />
+        <option value="$USER_HOME$/Downloads/hw1/hw1.py" />
         <option value="$PROJECT_DIR$/hw1.py" />
+        <option value="$USER_HOME$/Downloads/hw1/hwa1.ipynb" />
         <option value="$PROJECT_DIR$/hwa1.ipynb" />
       </list>
     </option>
@@ -164,18 +125,19 @@
       <workItem from="1552760199866" duration="2306000" />
       <workItem from="1552776147107" duration="16496000" />
       <workItem from="1552994930194" duration="1646000" />
-      <workItem from="1553013394846" duration="3897000" />
+      <workItem from="1553013394846" duration="14020000" />
+      <workItem from="1553677039425" duration="11000" />
+      <workItem from="1553967499495" duration="6000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34313000" />
+    <option name="totallyTimeSpent" value="44453000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="789" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27825466" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28540772" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -189,7 +151,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32998565" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32998565" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32998565" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32998565" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -202,37 +164,36 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Downloads/hw1.py">
+    <entry file="file://$USER_HOME$/Downloads/hwa1.ipynb" />
+    <entry file="file://$USER_HOME$/Downloads/hw1.py" />
+    <entry file="file://$USER_HOME$/Downloads/hw1/hw1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="62" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1091">
+          <caret line="246" column="24" selection-start-line="246" selection-start-column="24" selection-end-line="246" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/hwa1.ipynb">
+    <entry file="file://$USER_HOME$/Downloads/hw1/hwa1.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
-          <selected id="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hw1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="902">
-          <caret line="97" column="34" selection-start-line="97" selection-start-column="34" selection-end-line="97" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <selected id="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hwa1.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
-          <selected id="34" />
+          <selected id="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hw1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="127" column="23" selection-start-line="127" selection-start-column="23" selection-end-line="127" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

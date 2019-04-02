@@ -43,7 +43,7 @@ def compute_cost(X, y, theta):
 
     coeff = 1.0/(2 * X.shape[0])
     diff = np.matmul(X, theta) - y
-    diff = np.power(diff, 2)
+    diff = diff*diff
     sum = np.sum(diff)
     J = coeff * sum
     return J
@@ -75,6 +75,8 @@ def gradient_descent(X, y, theta, alpha, num_iters):
         theta = temp
         cost = compute_cost(X, y, theta)
         J_history.append(cost)
+        if cost == 0:
+            break
     return theta, J_history
 
 def pinv(X, y):
@@ -91,11 +93,7 @@ def pinv(X, y):
 
     ########## DO NOT USE numpy.pinv ##############
     """
-    XT = np.transpose(X)
-    print(np.linalg.inv(np.matmul(XT, X)).shape)
-    pinv = np.matmul(np.linalg.inv(np.matmul(XT, X)), XT)
-    pinv_theta = np.matmul(pinv, y)
-    print(compute_cost(X, y, pinv_theta))
+    pinv_theta = np.matmul(np.matmul(np.linalg.inv(np.matmul(np.transpose(X), X)), np.transpose(X)), y)
     return pinv_theta
 
 def efficient_gradient_descent(X, y, theta, alpha, num_iters):
@@ -115,20 +113,20 @@ def efficient_gradient_descent(X, y, theta, alpha, num_iters):
     - theta: The learned parameters of your model.
     - J_history: the loss value for every iteration.
     """
+
     J_history = []  # Use a python list to save cost in every iteration
     coeff = alpha/X.shape[0];
+    J_history.append(compute_cost(X, y, theta))
     for it in range(0, num_iters):
-        J_history.append(compute_cost(X, y, theta))
         diffX = np.matmul(X,theta) - y
-        temp = [0,0]
-        temp[0] = theta[0] - coeff * np.sum(diffX)
-        temp[1] = theta[1] - coeff * np.matmul(diffX, X[:, 1])
+        temp = theta - coeff * np.matmul(diffX, X)
         theta = temp
         loss = compute_cost(X, y, theta)
-        prev_loss = J_history[it]
-        loss_diff = loss - prev_loss
-        if abs(loss_diff) < 1e-8:
-            break
+        J_history.append(loss)
+        prev_loss = J_history[-2]
+        loss_diff = J_history[-2] - J_history[-1]
+        if loss_diff < 1e-8:
+            return theta, J_history
     return theta, J_history
 
 def find_best_alpha(X, y, iterations):
@@ -171,15 +169,9 @@ def generate_triplets(X):
     Returns:
     - A python list containing all feature triplets.
     """
-    
-    triplets = []
-    ###########################################################################
-    # TODO: Implement the function.                                           #
-    ###########################################################################
-    pass
-    ###########################################################################
-    #                             END OF YOUR CODE                            #
-    ###########################################################################
+
+    features_list = list(X)
+    triplets = list(itertools.combinations(features_list,3))
     return triplets
 
 def find_best_triplet(df, triplets, alpha, num_iter):
@@ -200,11 +192,26 @@ def find_best_triplet(df, triplets, alpha, num_iter):
     - The best triplet as a python list holding the best triplet as strings.
     """
     best_triplet = None
-    ###########################################################################
-    # TODO: Implement the function.                                           #
-    ###########################################################################
-    pass
-    ###########################################################################
-    #                             END OF YOUR CODE                            #
-    ###########################################################################
+    min_cost = float('inf')
+    np.random.seed(42)
+    shape = 4
+    theta = np.random.random(shape)
+    for features_set in triplets:
+        # Generate the data matrix
+        X = np.array(df[list(features_set)])
+        y = np.array(df['price'])
+
+        # preprocess data
+        X, y = preprocess(X, y)
+
+        # do bias trick
+        ones = np.ones(X.shape[0], dtype=int)
+        X = np.c_[ones, X]
+
+        # get minimal theta
+        _, J_history = efficient_gradient_descent(X, y, theta, alpha, num_iter)
+        set_min_cost = J_history[-1]
+        if set_min_cost < min_cost:
+            min_cost = set_min_cost
+            best_triplet = features_set
     return best_triplet
