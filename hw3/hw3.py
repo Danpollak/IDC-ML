@@ -17,10 +17,10 @@ class NaiveNormalClassDistribution():
         """
         self.dataset = dataset
         self.class_value = class_value
-        class_rows = dataset[dataset[:,-1] == class_value]
+        class_rows = dataset[dataset[:, -1] == class_value]
         self.param_dict = []
         count = np.shape(class_rows)[0]
-        for param in range(0,(np.shape(class_rows)[1]-1)):
+        for param in range(0, (np.shape(class_rows)[1]-1)):
             mean = np.sum(class_rows[:, param])/count
             mu = np.sqrt(np.sum((class_rows[:, param]-mean)*(class_rows[:, param]-mean))/count)
             self.param_dict.insert(param, [mean, mu])
@@ -93,7 +93,6 @@ class MultiNormalClassDistribution():
         """
         return self.get_prior()*self.get_instance_likelihood(x)
     
-    
 
 def normal_pdf(x, mean, std):
     """
@@ -111,7 +110,8 @@ def normal_pdf(x, mean, std):
     denominator = np.sqrt(2*np.pi*std*std)
 
     return numerator/denominator
-    
+
+
 def multi_normal_pdf(x, mean, cov):
     """
     Calculate multi variante normal desnity function for a given x, mean and covarince matrix.
@@ -148,26 +148,40 @@ class DiscreteNBClassDistribution():
         - dataset: The dataset from which to compute the probabilites (Numpy Array).
         - class_value : Compute the relevant parameters only for instances from the given class.
         """
-        pass
+        self.dataset = dataset
+        self.class_value = class_value
+        self.class_rows = dataset[dataset[:, -1] == class_value]
     
     def get_prior(self):
         """
         Returns the prior porbability of the class according to the dataset distribution.
         """
-        return 1
+        class_column = self.dataset[:, -1]
+        freq = np.count_nonzero(class_column == self.class_value)
+        count = np.shape(class_column)[0]
+        return freq / count
     
     def get_instance_likelihood(self, x):
         """
         Returns the likelihhod porbability of the instance under the class according to the dataset distribution.
         """
-        return 1
-    
+
+        likelihood = 1
+        for param in range(0, np.shape(x)[0]):
+            n_ij = self.class_rows[self.class_rows[:, param] == x[param]]
+            n_ij = np.shape(n_ij)[0] if np.shape(n_ij)[0] > 0 else EPSILLON
+            n_i = np.shape(self.class_rows)[0]
+            unq = np.shape(np.unique(self.dataset[:, param]))[0]
+            likelihood *= ((n_ij + 1) / (n_i+unq))
+
+        return likelihood
+
     def get_instance_posterior(self, x):
         """
         Returns the posterior porbability of the instance under the class according to the dataset distribution.
         * Ignoring p(x)
         """
-        return 1
+        return self.get_prior()*self.get_instance_likelihood(x)
 
     
 ####################################################################################################
@@ -201,6 +215,7 @@ class MAPClassifier():
             return 0
         else:
             return 1
+
     
 def compute_accuracy(testset, map_classifier):
     """
@@ -216,18 +231,7 @@ def compute_accuracy(testset, map_classifier):
     correct = 0
     size = np.shape(testset)[0]
     for row in testset:
-        prediction = map_classifier.predict(row[:2])
+        prediction = map_classifier.predict(row[:-1])
         if prediction == row[-1]:
             correct += 1
     return correct/size
-    
-            
-            
-            
-            
-            
-            
-            
-            
-            
-    
